@@ -1,56 +1,35 @@
 import React, { useState, useEffect } from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View, ScrollView } from 'react-native'
 import Search from './Search'
-import yelp from './../../api/yelp'
+import ResultsList from './results/ResultsList'
+import useResults from '../../hooks/useResults'
 
 const IntroScreen = () => {
     const [term, setTerm] = useState('');
-    const [results, setResults] = useState([]);
-    const [errMsg, setErrMsg] = useState('')
+    const [results, errMsg, searchApi] = useResults();
 
-    // const serachApi = () => {
-    //     yelp.get('/search', {
-    //         params: {
-    //             limit: 50,
-    //             term: term,
-    //             location: 'san jose'
-    //         }
-    //     })
-    //     .then(res => {
-    //         setResults(res.data.businesses)
-    //     })
-    // }
-    // or
+    // console.log(results)
 
-    useEffect(() => {
-       searchApi('pasta')
-    }, [])
-    
-    const searchApi = async (searchWord) => {
-        try {
-            const res = await yelp.get('/search', {
-                params: {
-                    limit: 50,
-                    term: searchWord,
-                    location: 'san jose'
-                }
-            })
-            setResults(res.data.businesses)
-        } catch (error) {
-            setErrMsg('Something wrong in Api call')
-        }
+    const filteredResultsByPrice = (price) => {
+        return results.filter(result => {
+            return result.price === price;
+        })
     }
 
-
-
     return (
-        <View>
+        <View style={{flex: 1}}>
             <Search
                 term={term}
-                onTermChange={(newTerm) => setTerm(newTerm)} 
+                onTermChange={(newTerm) => setTerm(newTerm)}
                 onTermSubmit={() => searchApi(term)} />
             {errMsg ? <Text>{errMsg}</Text> : null}
-            <Text>There you go: {results.length}</Text>
+            {/* <Text>There you go: {results.length}</Text> */}
+        <ScrollView>
+            <ResultsList title='Price range: $' results={filteredResultsByPrice('$')} />
+            <ResultsList title='Price range: $$' results={filteredResultsByPrice('$$')} />
+            <ResultsList title='Price range: $$$' results={filteredResultsByPrice('$$$')} />
+            <ResultsList title='Price range: $$$$' results={filteredResultsByPrice('$$$$')} />
+        </ScrollView>
         </View>
     )
 }

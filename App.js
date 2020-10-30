@@ -6,7 +6,6 @@ import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Intro from './src/components/intro/IntroScreen'
-import Content from './src/components/intro/Content'
 
 
 const Stack = createStackNavigator();
@@ -16,7 +15,6 @@ function App() {
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Search">
         <Stack.Screen name="Resto Search" component={Intro} />
-        <Stack.Screen name="Content" component={Content} />
       </Stack.Navigator>
     </NavigationContainer>
   );
