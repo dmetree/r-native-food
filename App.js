@@ -1,21 +1,26 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+const ClietId = 'QiDdrpoL1__Pp8VR8H1uQw';
+const ApiKey = 'QL-xUnA5CbTgEgVSFw-nZoUaXOMGS7JgOtvOiAGJ745pjN4dihke9o-ihbpsgn_rBD5wZv12ymCFp-c4_dvOZMDbhycbw-KW6OlPw_eKLEwxSZb0dXvcI7A3oUKZX3Yx'
 
-export default function App() {
+
+import * as React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import Intro from './src/components/intro/IntroScreen'
+import Content from './src/components/intro/Content'
+
+
+const Stack = createStackNavigator();
+
+function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Search">
+        <Stack.Screen name="Resto Search" component={Intro} />
+        <Stack.Screen name="Content" component={Content} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+
+export default App;
