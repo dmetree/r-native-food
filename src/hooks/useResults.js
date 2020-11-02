@@ -21,7 +21,7 @@ export default () => {
     // or
 
     useEffect(() => {
-        searchApi('pasta')
+        searchApi('pita')
     }, [])
 
     const searchApi = async (searchWord) => {

@@ -4,7 +4,7 @@ import Search from './Search'
 import ResultsList from './results/ResultsList'
 import useResults from '../../hooks/useResults'
 
-const IntroScreen = () => {
+const IntroScreen = ({navigation}) => {
     const [term, setTerm] = useState('');
     const [results, errMsg, searchApi] = useResults();
 
@@ -17,20 +17,19 @@ const IntroScreen = () => {
     }
 
     return (
-        <View style={{flex: 1}}>
+        <>
             <Search
                 term={term}
                 onTermChange={(newTerm) => setTerm(newTerm)}
                 onTermSubmit={() => searchApi(term)} />
             {errMsg ? <Text>{errMsg}</Text> : null}
-            {/* <Text>There you go: {results.length}</Text> */}
         <ScrollView>
-            <ResultsList title='Price range: $' results={filteredResultsByPrice('$')} />
-            <ResultsList title='Price range: $$' results={filteredResultsByPrice('$$')} />
-            <ResultsList title='Price range: $$$' results={filteredResultsByPrice('$$$')} />
-            <ResultsList title='Price range: $$$$' results={filteredResultsByPrice('$$$$')} />
+            <ResultsList navigation={navigation} title='Price range: $' results={filteredResultsByPrice('$')} />
+            <ResultsList navigation={navigation} title='Price range: $$' results={filteredResultsByPrice('$$')} />
+            <ResultsList navigation={navigation} title='Price range: $$$' results={filteredResultsByPrice('$$$')} />
+            <ResultsList navigation={navigation} title='Price range: $$$$' results={filteredResultsByPrice('$$$$')} />
         </ScrollView>
-        </View>
+        </>
     )
 }
 
